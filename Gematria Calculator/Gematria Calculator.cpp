@@ -148,7 +148,7 @@ void PrintGematria() {
   if (!Gematria.empty()) {
     std::cout << "Jewish  Gematria of " << Gematria << " equals: " << ConvertLetters_jewish(Gematria) << " \n";
     std::cout << "English Gematria of " << Gematria << " equals: " << ConvertLetters_english(Gematria) << " \n";
-    std::cout << "Simple  Gematria of " << Gematria << " equals: " << ConvertLetters_jewish(Gematria) << " \n\n";
+    std::cout << "Simple  Gematria of " << Gematria << " equals: " << ConvertLetters_simple(Gematria) << " \n\n";
 
     std::cout << "Enter nothing to end program.\n";
     PrintGematria();
