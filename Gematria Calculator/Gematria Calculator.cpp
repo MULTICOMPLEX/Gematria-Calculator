@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include <algorithm>
+#include <regex>
 
 std::string Gematria;
 
@@ -14,16 +15,30 @@ std::string AskGematria() {
 
 }
 
+std::string to_lowwer_case(std::string& str) {
+  std::regex non_letters_regex("[^a-zA-Z-]");
+  return std::regex_replace(str, non_letters_regex, "");
+}
+
+std::string strip_to_letters(const std::string& str) {
+  std::string letters;
+  for (char c : str) {
+    if (std::isalpha(c)) {
+      letters += c;
+    }
+  }
+  return letters;
+}
+
 int ConvertLetters_jewish(const std::string& Letters) {
   //    Converts letters to numerical value.
   std::unordered_map <char, int > Gematria_Values = {
-          {' ', 0},
           {'a', 1},
           {'b', 2},
           {'c', 3},
           {'d', 4},
           {'e', 5},
-          {'f', 6},
+          {'f', 11},//6
           {'g', 7},
           {'h', 8},
           {'i', 9},
@@ -52,7 +67,8 @@ int ConvertLetters_jewish(const std::string& Letters) {
   //            transform(Gematria.begin(), Gematria.end(), Gematria.begin(),::toupper);
   //std::cin >> Gematria;
   int sum = 0;
-  for (auto& ch : Letters)
+  auto str = strip_to_letters(Letters);
+  for (auto& ch : str)
     sum += Gematria_Values[ch];
   return sum;
 }
@@ -60,13 +76,12 @@ int ConvertLetters_jewish(const std::string& Letters) {
 int ConvertLetters_english(const std::string& Letters) {
   //    Converts letters to numerical value.
   std::unordered_map <char, int > Gematria_Values = {
-          {' ', 0},
           {'a', 6},
           {'b', 12},
           {'c', 18},
           {'d', 24},
           {'e', 30},
-          {'f', 36},
+          {'f', 66},//36
           {'g', 42},
           {'h', 48},
           {'i', 54},
@@ -95,7 +110,8 @@ int ConvertLetters_english(const std::string& Letters) {
   //            std::transform( Gematria.begin(),  Gematria.end(),  Gematria.begin(),::toupper);
   //std::cin >> Gematria;
   int sum = 0;
-  for (auto& ch : Letters)
+  auto str = strip_to_letters(Letters);
+  for (auto& ch : str)
     sum += Gematria_Values[ch];
   return sum;
 }
@@ -103,13 +119,12 @@ int ConvertLetters_english(const std::string& Letters) {
 int ConvertLetters_simple(const std::string& Letters) {
   //    Converts letters to numerical value.
   std::unordered_map <char, int > Gematria_Values = {
-          {' ', 0},
           {'a', 1},
           {'b', 2},
           {'c', 3},
           {'d', 4},
           {'e', 5},
-          {'f', 6},
+          {'f', 11},//6
           {'g', 7},
           {'h', 8},
           {'i', 9},
@@ -138,7 +153,8 @@ int ConvertLetters_simple(const std::string& Letters) {
   //            std::transform( Gematria.begin(),  Gematria.end(),  Gematria.begin(),::toupper);
   //std::cin >> Gematria;
   int sum = 0;
-  for (auto& ch : Letters)
+  auto str = strip_to_letters(Letters);
+  for (auto& ch : str)
     sum += Gematria_Values[ch];
   return sum;
 }
@@ -146,9 +162,14 @@ int ConvertLetters_simple(const std::string& Letters) {
 void PrintGematria() {
   std::string Gematria = AskGematria();
   if (!Gematria.empty()) {
-    std::cout << "Jewish  Gematria of " << Gematria << " equals: " << ConvertLetters_jewish(Gematria) << " \n";
-    std::cout << "English Gematria of " << Gematria << " equals: " << ConvertLetters_english(Gematria) << " \n";
-    std::cout << "Simple  Gematria of " << Gematria << " equals: " << ConvertLetters_simple(Gematria) << " \n\n";
+
+    auto str = to_lowwer_case(Gematria);
+    std::cout << str << " \n\n\n";
+
+
+    std::cout << "Jewish  Gematria of " << Gematria << " equals: " << ConvertLetters_jewish(str) << " \n";
+    std::cout << "English Gematria of " << Gematria << " equals: " << ConvertLetters_english(str) << " \n";
+    std::cout << "Simple  Gematria of " << Gematria << " equals: " << ConvertLetters_simple(str) << " \n\n";
 
     std::cout << "Enter nothing to end program.\n";
     PrintGematria();
